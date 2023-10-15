@@ -1,0 +1,52 @@
+{
+  "name": "denyactions-nodelete-indexed",
+  "type": "Microsoft.Authorization/policyDefinitions",
+  "apiVersion": "2021-06-01",
+  "scope": null,
+  "properties": {
+    "displayName": "Protect against presumed malicious deletions. Contact a member of the Cloud Platform team if you wish to delete this resource.",
+    "description": "Protects against presumed malicious deletions of resources by denying delete operations on a set of resources. This only works for resources that support Indexed mode (location and tags)",
+    "metadata": {
+      "version": "1.0.0",
+      "category": "Security",
+      "preview": true
+    },
+    "mode": "Indexed",
+    "parameters": {
+      "effect": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Effect",
+          "description": "DenyAction or Disabled the execution of the Policy"
+        },
+        "allowedValues": ["DenyAction", "Disabled"],
+        "defaultValue": "DenyAction"
+      },
+      "protectedResources": {
+        "type": "Array",
+        "metadata": {
+          "displayName": "Protected Resources",
+          "description": "List of resources that should be protected from deletion"
+        },
+        "defaultValue": []
+      }
+    },
+    "policyRule": {
+      "if": {
+        "anyOf": [
+          {
+            "field": "type",
+            "in": "[parameters('protectedResources')]"
+          }
+        ]
+      },
+      "then": {
+        "effect": "[parameters('effect')]",
+        "details": {
+          "actionNames": ["delete"],
+          "cascadeBehaviors": { "resourceGroup": "deny" }
+        }
+      }
+    }
+  }
+}
