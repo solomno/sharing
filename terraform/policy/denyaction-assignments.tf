@@ -4,7 +4,7 @@ resource "azurerm_management_group_policy_assignment" "deny_actions" {
   name                 = "denyactions"
   display_name         = "[GOV] Disallow deletion of specific resource types"
   description          = "Avoid accidental or malicious deletion of resources by disallowing deletion of specific resource types."
-  policy_definition_id = azurerm_policy_definition.policy_definitions["denyactions-nodelete"].id
+  policy_definition_id = azurerm_policy_definition.policy_definitions["denyactions-nodelete-indexed"].id
   management_group_id  = "yourmggroupidhere"
   not_scopes = []
   enforce = true
