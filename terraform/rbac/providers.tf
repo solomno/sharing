@@ -15,3 +15,9 @@ terraform {
     path = "./terraform.tfstate"
   }
 }
+
+provider "azurerm" {
+  features {}
+  storage_use_azuread        = true
+  skip_provider_registration = true
+}
