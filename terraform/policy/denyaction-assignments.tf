@@ -1,13 +1,17 @@
 ### Ensure none of these resources can be removed anywhere in the platform
 
+data "azurerm_management_group" "dev_worklaods" {
+  display_name = "Dev Workloads"
+}
+
 resource "azurerm_management_group_policy_assignment" "deny_actions" {
   name                 = "denyactions"
   display_name         = "[GOV] Disallow deletion of specific resource types"
   description          = "Avoid accidental or malicious deletion of resources by disallowing deletion of specific resource types."
   policy_definition_id = azurerm_policy_definition.policy_definitions["denyactions-nodelete-indexed"].id
-  management_group_id  = "yourmggroupidhere"
-  not_scopes = []
-  enforce = true
+  management_group_id  = data.azurerm_management_group.dev_worklaods.id
+  not_scopes           = []
+  enforce              = true
 
   parameters = jsonencode({
     "protectedResources" : {
@@ -38,9 +42,9 @@ resource "azurerm_management_group_policy_assignment" "deny_actions_all" {
   display_name         = "[GOV] Disallow deletion of specific resource types in ALL mode"
   description          = "Avoid accidental or malicious deletion of resources by disallowing deletion of specific resource types."
   policy_definition_id = azurerm_policy_definition.policy_definitions["denyactions-nodelete-all"].id
-  management_group_id  = "yourmggroupid2here"
-  not_scopes = []
-  enforce = true
+  management_group_id  = data.azurerm_management_group.dev_worklaods.id
+  not_scopes           = []
+  enforce              = true
 
   parameters = jsonencode({
     "protectedResources" : {
