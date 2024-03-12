@@ -1,12 +1,12 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "enabledManagers": ["github-actions", "docker", "kubernetes", "terraform"],
+  "enabledManagers": ["github-actions", "kubernetes", "terraform"],
   "ignorePaths": [],
   "assignees": ["@audunsolemdal"],
   "packageRules": [
     {
       "groupName": "github-actions",
-      "matchManagers": ["github-actions"],
+      "matchManagers": ["github-actions"]
     },
     {
       "groupName": "terraform",
