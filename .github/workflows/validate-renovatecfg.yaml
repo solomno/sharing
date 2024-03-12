@@ -11,8 +11,9 @@ on:
 
 jobs:
   check:
-    name: Check if there is a new upstream release
+    name: Validate config
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
       - name: Validate Renovate Configuration with renovate-config-validator
         uses: suzuki-shunsuke/github-action-renovate-config-validator@v1.0.1
