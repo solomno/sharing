@@ -13,6 +13,6 @@
       "matchManagers": ["terraform"],
       "matchUpdateTypes": ["patch", "minor"],
       "automerge": true
-    },
+    }
   ]
 }
