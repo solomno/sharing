@@ -26,6 +26,7 @@ resource "azurerm_management_group_policy_assignment" "deny_actions" {
         "Microsoft.Network/virtualWans",
         "Microsoft.Network/virtualHubs",
         "Microsoft.Network/vpnSites",
+        "Microsoft.Network/vpnGateways",
         "Microsoft.Network/azureFirewalls",
         "Microsoft.Network/firewallPolicies",
         "Microsoft.Network/privateDnsZones",
