@@ -2,7 +2,7 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "enabledManagers": ["github-actions", "kubernetes", "terraform"],
   "ignorePaths": [],
-  "assignees": ["@audunsolemdal"],
+  "assignees": ["@solom-admins"],
   "packageRules": [
     {
       "groupName": "github-actions",
