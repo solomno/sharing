@@ -31,6 +31,7 @@ resource "azurerm_role_assignment" "tstsp1_constrained" {
   scope                = data.azurerm_subscription.current.id
   role_definition_name = "User Access Administrator"
   principal_id         = data.azuread_group.owners.object_id
+  principal_type       = "Group"
   description          = "This role assignment is used to allow the owners group to assign the delegated roles to the delegated groups"
   condition_version    = "2.0"
   condition            = <<-EOT
@@ -74,22 +75,20 @@ EOT
 
 data "azurerm_subscription" "current" {}
 
-# The below code is run by "User B" - which is a member of the "owners" group
-# This works as expected (403- ... does not have authorization to perform action 'Microsoft.Authorization/roleAssignments/write')
-# Modifying the ABAC condition may give another error code referencing ABAC constraints, which is fine
-/* 
+# Run by "User B"
+# Should not work due to ABAC constraint
 resource "azurerm_role_assignment" "example_expected_not_to_work" {
   scope                = data.azurerm_subscription.current.id
   role_definition_name = "Owner"
+  principal_type       = "Group"
   principal_id         = data.azuread_group.owners.object_id
 }
 
-
-# The below code is run by "User B" - which is a member of the "owners" group
-# This example currently does not work as expected, returns (403- ... does not have authorization to perform action 'Microsoft.Authorization/roleAssignments/write')
-# Assigning the same role in the azure portal does work, so it is likely a missing feature in the azurerm provider
+# Run by "User B"
+# Should work as long as   principal_type       = "Group" is explicitly set.
 resource "azurerm_role_assignment" "example_expected_to_work" {
   scope                = data.azurerm_subscription.current.id
   role_definition_name = "Storage Queue Data Contributor"
   principal_id         = data.azuread_group.owners.object_id
-} */
+  principal_type       = "Group"
+}
